@@ -35,7 +35,9 @@ class EnterPasswordPage extends StatelessWidget {
                   behavior: SnackBarBehavior.floating,
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackbar);
-              } else if (state is ButtonSuccessState) {}
+              } else if (state is ButtonSuccessState) {
+                AppNavigator.push(context, const Scaffold());
+              }
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

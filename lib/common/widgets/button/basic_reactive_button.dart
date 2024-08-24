@@ -29,7 +29,7 @@ class BasicReactiveButton extends StatelessWidget {
     );
   }
 
-  ElevatedButton _initial() {
+  Widget _initial() {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -44,7 +44,7 @@ class BasicReactiveButton extends StatelessWidget {
     );
   }
 
-  ElevatedButton _loading() {
+  Widget _loading() {
     return ElevatedButton(
       onPressed: null,
       style: ElevatedButton.styleFrom(
