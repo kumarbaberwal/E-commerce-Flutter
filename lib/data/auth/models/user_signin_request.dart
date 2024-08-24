@@ -4,6 +4,6 @@ class UserSigninRequest {
 
   UserSigninRequest({
     required this.email,
-    required this.password,
+    this.password,
   });
 }

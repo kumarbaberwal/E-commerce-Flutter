@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce/data/auth/models/user_creation_request.dart';
+import 'package:ecommerce/data/auth/models/user_signin_request.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthFirebaseService {
   Future<Either> getAges();
+  Future<Either> sendPasswordResetEmail(String email);
+  Future<Either> signin(UserSigninRequest user);
   Future<Either> signup(UserCreationRequest user);
 }
 
@@ -17,6 +20,38 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
       return Right(returnedData.docs);
     } catch (e) {
       return const Left('Please Try Again!');
+    }
+  }
+
+  @override
+  Future<Either> sendPasswordResetEmail(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return const Right('Passord reset email is sent');
+    } catch (e) {
+      return const Left('Please Try Again');
+    }
+  }
+
+  @override
+  Future<Either> signin(UserSigninRequest user) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: user.email!,
+        password: user.password!,
+      );
+
+      return const Right(
+        'Sucessfully Sign in',
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = '';
+      if (e.code == 'invalid-email') {
+        message = 'User not found for that email';
+      } else if (e.code == 'invalid-credential') {
+        message = 'Wrong Password provided for that user';
+      }
+      return Left(message);
     }
   }
 

@@ -67,10 +67,10 @@ class SignupPage extends StatelessWidget {
           context,
           GenderAndAgeSelectionPage(
             userCreationRequest: UserCreationRequest(
-              firstName: firstName.text,
-              lastName: lastName.text,
-              email: email.text,
-              password: password.text,
+              firstName: firstName.text.trim(),
+              lastName: lastName.text.trim(),
+              email: email.text.trim(),
+              password: password.text.trim(),
             ),
           ),
         );
@@ -89,7 +89,7 @@ class SignupPage extends StatelessWidget {
           text: 'Signin',
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              AppNavigator.pushReplacement(context, const SigninPage());
+              AppNavigator.pushReplacement(context, SigninPage());
             },
           style: const TextStyle(
             fontWeight: FontWeight.bold,
