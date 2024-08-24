@@ -10,6 +10,16 @@ class AppNavigator {
     );
   }
 
+  static void pushAndRemoveUntil(BuildContext context, Widget widget) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   static void pushReplacement(BuildContext context, Widget widget) {
     Navigator.pushReplacement(
       context,

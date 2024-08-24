@@ -7,6 +7,6 @@ import 'package:ecommerce/service_locator.dart';
 class SigninUseCase implements Usecase<Either, UserSigninRequest> {
   @override
   Future<Either> call({UserSigninRequest? params}) async {
-    return sl<AuthRepository>().signin(params!);
+    return await sl<AuthRepository>().signin(params!);
   }
 }

@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthFirebaseService {
   Future<Either> getAges();
+  Future<Either> getUser();
+  Future<bool> isLoggedIn();
   Future<Either> sendPasswordResetEmail(String email);
   Future<Either> signin(UserSigninRequest user);
   Future<Either> signup(UserCreationRequest user);
@@ -20,6 +22,29 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
       return Right(returnedData.docs);
     } catch (e) {
       return const Left('Please Try Again!');
+    }
+  }
+
+  @override
+  Future<Either> getUser() async {
+    try {
+      var currentUser = FirebaseAuth.instance.currentUser;
+      var userData = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(currentUser?.uid)
+          .get().then((value) => value.data(),);
+      return Right(userData);
+    } catch (e) {
+      return const Left('Please Try Again');
+    }
+  }
+
+  @override
+  Future<bool> isLoggedIn() async {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return true;
+    } else {
+      return false;
     }
   }
 
