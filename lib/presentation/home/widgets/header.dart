@@ -22,8 +22,7 @@ class Header extends StatelessWidget {
           builder: (context, state) {
             if (state is UserInfoLoading) {
               return const Center(child: CircularProgressIndicator());
-            }
-            if (state is UserInfoLoaded) {
+            } else if (state is UserInfoLoaded) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -83,12 +82,13 @@ class Header extends StatelessWidget {
         height: 40,
         width: 40,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: user.image.isEmpty
-                    ? const AssetImage(AppImages.profile)
-                    : NetworkImage(user.image)),
-            color: Colors.red,
-            shape: BoxShape.circle),
+          image: DecorationImage(
+              image: user.image.isEmpty
+                  ? const AssetImage(AppImages.profile)
+                  : NetworkImage(user.image)),
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }

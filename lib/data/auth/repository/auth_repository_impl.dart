@@ -18,7 +18,7 @@ class AuthRepositoryImpl extends AuthRepository {
     return user.fold((error) {
       return Left(error);
     }, (data) {
-      return Right(UserModel.fromJson(data).toEntity());
+      return Right(UserModel.fromMap(data).toEntity());
     });
   }
 
