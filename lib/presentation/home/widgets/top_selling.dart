@@ -1,8 +1,10 @@
 import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/widgets/product/product_card.dart';
 import 'package:ecommerce/domain/product/entity/product_entity.dart';
-import 'package:ecommerce/presentation/home/bloc/top_selling_display_cubit.dart';
-import 'package:ecommerce/presentation/home/bloc/top_selling_display_state.dart';
+import 'package:ecommerce/common/bloc/product/products_display_cubit.dart';
+import 'package:ecommerce/common/bloc/product/products_display_state.dart';
+import 'package:ecommerce/domain/product/usecases/get_top_selling_use_case.dart';
+import 'package:ecommerce/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class TopSelling extends StatelessWidget {
@@ -11,8 +13,8 @@ class TopSelling extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TopSellingDisplayCubit()..displayProducts(),
-      child: BlocBuilder<TopSellingDisplayCubit, TopSellingDisplayState>(
+      create: (context) => ProductsDisplayCubit(useCase: sl<GetTopSellingUseCase>())..displayProducts(),
+      child: BlocBuilder<ProductsDisplayCubit, ProductsDisplayState>(
         builder: (context, state) {
           if (state is ProductsLoading) {
             return const CircularProgressIndicator();

@@ -1,16 +1,16 @@
 import 'package:ecommerce/domain/product/entity/product_entity.dart';
 
-abstract class TopSellingDisplayState {}
+abstract class ProductsDisplayState {}
 
-class ProductsLoading extends TopSellingDisplayState {}
+class ProductsLoading extends ProductsDisplayState {}
 
-class ProductsLoaded extends TopSellingDisplayState {
+class ProductsLoaded extends ProductsDisplayState {
   final List<ProductEntity> productEntity;
 
   ProductsLoaded({required this.productEntity});
 }
 
-class ProductsFailure extends TopSellingDisplayState {
+class ProductsFailure extends ProductsDisplayState {
   final String message;
 
   ProductsFailure({required this.message});
