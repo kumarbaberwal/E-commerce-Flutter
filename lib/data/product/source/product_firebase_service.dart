@@ -13,7 +13,7 @@ class ProductFirebaseServiceImpl extends ProductFirebaseService {
       var returnedData = await FirebaseFirestore.instance
           .collection('Products')
           .where('salesNumber',
-              isGreaterThanOrEqualTo: Timestamp.fromDate(DateTime(2024, 8, 26)))
+              isGreaterThanOrEqualTo: Timestamp.fromDate(DateTime(2024, 8, 28)))
           .get();
       return Right(returnedData.docs.map((e) => e.data()).toList());
     } catch (e) {

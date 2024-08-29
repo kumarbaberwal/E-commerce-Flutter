@@ -5,6 +5,7 @@ import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/domain/auth/entity/user_entity.dart';
 import 'package:ecommerce/presentation/home/bloc/user_info_display_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../bloc/user_info_display_state.dart';
@@ -21,7 +22,14 @@ class Header extends StatelessWidget {
         child: BlocBuilder<UserInfoDisplayCubit, UserInfoDisplayState>(
           builder: (context, state) {
             if (state is UserInfoLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _profileImageShimmer(),
+                  _genderShimmer(),
+                  _cardShimmer(),
+                ],
+              );
             } else if (state is UserInfoLoaded) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,10 +56,27 @@ class Header extends StatelessWidget {
         height: 40,
         width: 40,
         decoration: const BoxDecoration(
-            color: AppColors.primary, shape: BoxShape.circle),
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
         child: SvgPicture.asset(
           AppVectors.bag,
           fit: BoxFit.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _cardShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.white,
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey,
         ),
       ),
     );
@@ -73,6 +98,22 @@ class Header extends StatelessWidget {
     );
   }
 
+  Widget _genderShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.white,
+      child: Container(
+        height: 40,
+        width: 120,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: Colors.grey,
+          // color: AppColors.secondBackground,
+        ),
+      ),
+    );
+  }
+
   Widget _profileImage(UserEntity user, BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -88,6 +129,22 @@ class Header extends StatelessWidget {
                   : NetworkImage(user.image)),
           color: Colors.red,
           shape: BoxShape.circle,
+        ),
+      ),
+    );
+  }
+
+  Widget _profileImageShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.white,
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey,
+          // color: Colors.red,
         ),
       ),
     );

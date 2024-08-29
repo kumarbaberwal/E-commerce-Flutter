@@ -3,6 +3,7 @@ import 'package:ecommerce/common/bloc/categories/categories_display_cubit.dart';
 import 'package:ecommerce/common/helper/images/image_display_helper.dart';
 import 'package:ecommerce/domain/category/entity/category_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../common/bloc/categories/categories_display_state.dart';
 
@@ -16,7 +17,15 @@ class Categories extends StatelessWidget {
       child: BlocBuilder<CategoriesDisplayCubit, CategoriesDisplayState>(
         builder: (context, state) {
           if (state is CategoriesLoading) {
-            return const CircularProgressIndicator();
+            return Column(
+              children: [
+                _seaAllShimmer(),
+                const SizedBox(
+                  height: 20,
+                ),
+                _categoriesShimmer(),
+              ],
+            );
           }
           if (state is CategoriesLoaded) {
             return Column(
@@ -73,6 +82,50 @@ class Categories extends StatelessWidget {
     );
   }
 
+  Widget _categoriesShimmer() {
+    return SizedBox(
+      height: 100,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemBuilder: (contetx, index) {
+            return Column(
+              children: [
+                Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.white,
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.white,
+                  child: Container(
+                    height: 19.2,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) => const SizedBox(width: 15),
+          itemCount: 5),
+    );
+  }
+
   Widget _seaAll(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -92,6 +145,41 @@ class Categories extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _seaAllShimmer() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.white,
+            child: Container(
+              height: 16,
+              width: 140,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+          Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.white,
+            child: Container(
+              height: 19.2,
+              width: 40,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -6,8 +6,9 @@ import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/domain/product/entity/product_entity.dart';
 import 'package:ecommerce/domain/product/usecases/get_new_in_use_case.dart';
 import 'package:flutter/material.dart';
-import '../../../service_locator.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../../service_locator.dart';
 
 class NewIn extends StatelessWidget {
   const NewIn({super.key});
@@ -15,11 +16,22 @@ class NewIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsDisplayCubit(useCase: sl<GetNewInUseCase>())..displayProducts(),
-      child: BlocBuilder < ProductsDisplayCubit, ProductsDisplayState > (
+      create: (context) => ProductsDisplayCubit(useCase: sl<GetNewInUseCase>())
+        ..displayProducts(),
+      child: BlocBuilder<ProductsDisplayCubit, ProductsDisplayState>(
         builder: (context, state) {
           if (state is ProductsLoading) {
-            return const CircularProgressIndicator();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _newInShimmer(),
+                const SizedBox(
+                  height: 20,
+                ),
+                _productsShimmer(),
+              ],
+            );
           }
           if (state is ProductsLoaded) {
             return Column(
@@ -27,7 +39,9 @@ class NewIn extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 _newIn(),
-                const SizedBox(height: 20, ),
+                const SizedBox(
+                  height: 20,
+                ),
                 _products(state.productEntity)
               ],
             );
@@ -38,39 +52,156 @@ class NewIn extends StatelessWidget {
     );
   }
 
-   Widget _newIn() {
+  Widget _newIn() {
     return const Padding(
       padding: EdgeInsets.symmetric(
-         horizontal: 16,
-       ),
+        horizontal: 16,
+      ),
       child: Text(
         'New In',
         style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-          color: AppColors.primary 
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: AppColors.primary),
+      ),
+    );
+  }
+
+  Widget _newInShimmer() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.white,
+        child: Container(
+          height: 19.2,
+          width: 140,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
       ),
     );
   }
 
-   Widget _products(List<ProductEntity> products) {
+  Widget _products(List<ProductEntity> products) {
+    return SizedBox(
+      height: 300,
+      child: ListView.separated(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return ProductCard(
+              productEntity: products[index],
+            );
+          },
+          separatorBuilder: (context, index) => const SizedBox(
+                width: 10,
+              ),
+          itemCount: products.length),
+    );
+  }
+
+  Widget _productsShimmer() {
     return SizedBox(
       height: 300,
       child: ListView.separated(
         shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(
-         horizontal: 16,
-       ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context,index) {
-          return ProductCard(
-            productEntity: products[index],
+        itemBuilder: (context, index) {
+          return Container(
+            width: 180,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.white,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            height: 14.4,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                height: 14.4,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                height: 14.4,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
-        separatorBuilder: (context,index) => const SizedBox(width: 10,),
-        itemCount: products.length
-        ),
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        itemCount: 5,
+      ),
     );
   }
 }
