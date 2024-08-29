@@ -1,120 +1,119 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/bloc/product/products_display_cubit.dart';
 import 'package:ecommerce/common/bloc/product/products_display_state.dart';
+import 'package:ecommerce/common/widgets/appbar/app_bar.dart';
 import 'package:ecommerce/common/widgets/product/product_card.dart';
 import 'package:ecommerce/core/configs/theme/app_colors.dart';
+import 'package:ecommerce/domain/category/entity/category_entity.dart';
 import 'package:ecommerce/domain/product/entity/product_entity.dart';
-import 'package:ecommerce/domain/product/usecases/get_new_in_use_case.dart';
+import 'package:ecommerce/domain/product/usecases/get_products_by_category_id_use_case.dart';
+import 'package:ecommerce/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../service_locator.dart';
-
-class NewIn extends StatelessWidget {
-  const NewIn({super.key});
+class CategoryProductsPage extends StatelessWidget {
+  final CategoryEntity categoryEntity;
+  const CategoryProductsPage({
+    super.key,
+    required this.categoryEntity,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProductsDisplayCubit(useCase: sl<GetNewInUseCase>())
-        ..displayProducts(),
-      child: BlocBuilder<ProductsDisplayCubit, ProductsDisplayState>(
-        builder: (context, state) {
-          if (state is ProductsLoading) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _newInShimmer(),
-                const SizedBox(
-                  height: 20,
+    return Scaffold(
+      appBar: const BasicAppbar(),
+      body: BlocProvider(
+        create: (context) =>
+            ProductsDisplayCubit(useCase: sl<GetProductsByCategoryIdUseCase>())
+              ..displayProducts(params: categoryEntity.categoryId),
+        child: BlocBuilder<ProductsDisplayCubit, ProductsDisplayState>(
+          builder: (context, state) {
+            if (state is ProductsLoading) {
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _categoryInfoShimmer(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _productsShimmer()
+                  ],
                 ),
-                _productsShimmer(),
-              ],
-            );
-          }
-          if (state is ProductsLoaded) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _newIn(),
-                const SizedBox(
-                  height: 20,
+              );
+            }
+
+            if (state is ProductsLoaded) {
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _categoryInfo(state.productEntity),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _products(state.productEntity)
+                  ],
                 ),
-                _products(state.productEntity)
-              ],
-            );
-          }
-          return Container();
-        },
+              );
+            }
+
+            return Container();
+          },
+        ),
       ),
     );
   }
 
-  Widget _newIn() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
-      child: Text(
-        'New In',
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: AppColors.primary),
-      ),
+  Widget _categoryInfo(List<ProductEntity> products) {
+    return Text(
+      '${categoryEntity.title} (${products.length})',
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
     );
   }
 
-  Widget _newInShimmer() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.white,
-        child: Container(
-          height: 19.2,
-          width: 140,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(16),
-          ),
+  Widget _categoryInfoShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.white,
+      child: Container(
+        height: 19.2,
+        width: 40,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
     );
   }
 
   Widget _products(List<ProductEntity> products) {
-    return SizedBox(
-      height: 300,
-      child: ListView.separated(
-          shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-          ),
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return ProductCard(
-              productEntity: products[index],
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(
-                width: 10,
-              ),
-          itemCount: products.length),
+    return Expanded(
+      child: GridView.builder(
+        itemCount: products.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.6),
+        itemBuilder: (BuildContext context, int index) {
+          return ProductCard(productEntity: products[index]);
+        },
+      ),
     );
   }
 
   Widget _productsShimmer() {
-    return SizedBox(
-      height: 300,
-      child: ListView.separated(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        scrollDirection: Axis.horizontal,
+    return Expanded(
+      child: GridView.builder(
+         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.6),
         itemBuilder: (context, index) {
           return Container(
             width: 180,
@@ -199,8 +198,7 @@ class NewIn extends StatelessWidget {
             ),
           );
         },
-        separatorBuilder: (context, index) => const SizedBox(width: 10),
-        itemCount: 5,
+        itemCount: 6,
       ),
     );
   }

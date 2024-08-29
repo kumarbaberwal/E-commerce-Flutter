@@ -13,6 +13,8 @@ class HomePage extends StatelessWidget {
     return const Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Header(),
             SizedBox(

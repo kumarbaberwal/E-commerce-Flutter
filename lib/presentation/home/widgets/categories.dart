@@ -1,7 +1,9 @@
 import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/bloc/categories/categories_display_cubit.dart';
 import 'package:ecommerce/common/helper/images/image_display_helper.dart';
+import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/domain/category/entity/category_entity.dart';
+import 'package:ecommerce/presentation/all_categories/pages/all_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -138,7 +140,7 @@ class Categories extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              // AppNavigator.push(context, const AllCategoriesPage());
+              AppNavigator.push(context, const AllCategoriesPage());
             },
             child: const Text(
               'See All',

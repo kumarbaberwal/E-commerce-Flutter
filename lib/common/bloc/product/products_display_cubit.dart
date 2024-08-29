@@ -3,8 +3,6 @@ import 'package:cubit_form/cubit_form.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce/common/bloc/product/products_display_state.dart';
 import 'package:ecommerce/core/usecase/usecase.dart';
-import 'package:ecommerce/domain/product/usecases/get_top_selling_use_case.dart';
-import 'package:ecommerce/service_locator.dart';
 
 class ProductsDisplayCubit extends Cubit<ProductsDisplayState> {
   final Usecase useCase;
@@ -12,8 +10,8 @@ class ProductsDisplayCubit extends Cubit<ProductsDisplayState> {
     required this.useCase,
   }) : super(ProductsLoading());
 
-  void displayProducts() async {
-    var returnedData = await sl<GetTopSellingUseCase>().call();
+  void displayProducts({dynamic params}) async {
+    var returnedData = await useCase.call(params: params);
     returnedData.fold((error) {
       return Left(emit(ProductsFailure(message: error)));
     }, (data) {

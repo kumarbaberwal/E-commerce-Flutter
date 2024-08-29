@@ -2,6 +2,7 @@ import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/bloc/product/products_display_cubit.dart';
 import 'package:ecommerce/common/bloc/product/products_display_state.dart';
 import 'package:ecommerce/common/widgets/product/product_card.dart';
+import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/domain/product/entity/product_entity.dart';
 import 'package:ecommerce/domain/product/usecases/get_top_selling_use_case.dart';
 import 'package:ecommerce/service_locator.dart';
@@ -85,7 +86,7 @@ class TopSelling extends StatelessWidget {
             return Container(
               width: 180,
               decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: AppColors.secondBackground,
                   borderRadius: BorderRadius.circular(8)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
