@@ -1,6 +1,6 @@
 import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/core/configs/assets/app_vectors.dart';
-import 'package:ecommerce/presentation/search/pages/search.dart';
+import 'package:ecommerce/presentation/search/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg.dart';
 
