@@ -1,4 +1,3 @@
-import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/bloc/button/button_cubit.dart';
 import 'package:ecommerce/common/bloc/button/button_state.dart';
 import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
@@ -7,6 +6,7 @@ import 'package:ecommerce/common/widgets/button/basic_reactive_button.dart';
 import 'package:ecommerce/domain/auth/usecases/send_password_reset_email_use_case.dart';
 import 'package:ecommerce/presentation/auth/pages/password_reset_email_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   final TextEditingController email = TextEditingController();

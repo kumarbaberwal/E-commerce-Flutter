@@ -1,4 +1,3 @@
-import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/bloc/product/products_display_cubit.dart';
 import 'package:ecommerce/common/bloc/product/products_display_state.dart';
 import 'package:ecommerce/common/widgets/product/product_card.dart';
@@ -6,6 +5,7 @@ import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/domain/product/entity/product_entity.dart';
 import 'package:ecommerce/domain/product/usecases/get_new_in_use_case.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../service_locator.dart';

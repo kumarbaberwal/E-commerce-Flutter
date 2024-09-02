@@ -89,7 +89,7 @@ class SignupPage extends StatelessWidget {
           text: 'Signin',
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              AppNavigator.pushReplacement(context, SigninPage());
+              AppNavigator.pushAndRemoveUntil(context, SigninPage());
             },
           style: const TextStyle(
             fontWeight: FontWeight.bold,

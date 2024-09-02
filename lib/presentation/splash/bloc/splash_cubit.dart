@@ -1,7 +1,7 @@
-import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/domain/auth/usecases/is_logged_in_use_case.dart';
 import 'package:ecommerce/presentation/splash/bloc/splash_state.dart';
 import 'package:ecommerce/service_locator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(DisplaySplash());

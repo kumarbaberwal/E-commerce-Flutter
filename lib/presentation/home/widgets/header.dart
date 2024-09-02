@@ -1,10 +1,10 @@
-import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/core/configs/assets/app_images.dart';
 import 'package:ecommerce/core/configs/assets/app_vectors.dart';
 import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/domain/auth/entity/user_entity.dart';
 import 'package:ecommerce/presentation/home/bloc/user_info_display_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:svg_flutter/svg.dart';
 

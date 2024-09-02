@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cubit_form/cubit_form.dart';
 import 'package:ecommerce/common/bloc/product/products_display_cubit.dart';
 import 'package:ecommerce/common/bloc/product/products_display_state.dart';
 import 'package:ecommerce/common/widgets/appbar/app_bar.dart';
@@ -10,6 +9,7 @@ import 'package:ecommerce/domain/product/entity/product_entity.dart';
 import 'package:ecommerce/domain/product/usecases/get_products_by_category_id_use_case.dart';
 import 'package:ecommerce/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CategoryProductsPage extends StatelessWidget {
