@@ -15,7 +15,7 @@ class ProductColorModel {
   factory ProductColorModel.fromMap(Map<String, dynamic> map) {
     return ProductColorModel(
       title: map['title'] as String,
-      rgb: List<int>.from((map['rgb'] as List<int>)),
+      rgb: List<int>.from((map['rgb'] as List<dynamic>)),
     );
   }
 

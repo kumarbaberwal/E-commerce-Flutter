@@ -9,5 +9,5 @@ class ProductQuantityCubit extends Cubit<int> {
     }
   }
 
-  void increment() => emit(state + 1);
+  void increment() => (emit(state + 1));
 }
