@@ -17,7 +17,19 @@ class OrderRepositoryImpl extends OrderRepository {
     return returnedData.fold((error) {
       return Left(error);
     }, (data) {
-      return Right(List.from(data).map((e) => ProductOrderedModel.fromMap(e)));
+      return Right(List.from(data)
+          .map((e) => ProductOrderedModel.fromMap(e).toEntity())
+          .toList());
+    });
+  }
+
+  @override
+  Future<Either> removeCartProduct(String id) async {
+    var returnedData = await sl<OrderFirebaseService>().removeCartProduct(id);
+    return returnedData.fold((error) {
+      return Left(error);
+    }, (message) {
+      return Right(message);
     });
   }
 }

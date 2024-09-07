@@ -22,7 +22,10 @@ class AddToBag extends StatelessWidget {
     return BlocListener<ButtonCubit, ButtonState>(
       listener: (context, state) {
         if (state is ButtonSuccessState) {
-          AppNavigator.push(context, const CartPage());
+          AppNavigator.push(
+            context,
+            const CartPage(),
+          );
         }
         if (state is ButtonFailureState) {
           var snackbar = SnackBar(

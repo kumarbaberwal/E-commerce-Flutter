@@ -13,6 +13,7 @@ class ProductOrderedModel {
   final double totalPrice;
   final String productImage;
   final String createdDate;
+  final String id;
   ProductOrderedModel({
     required this.productId,
     required this.productTitle,
@@ -23,6 +24,7 @@ class ProductOrderedModel {
     required this.totalPrice,
     required this.productImage,
     required this.createdDate,
+    required this.id,
   });
 
   factory ProductOrderedModel.fromJson(String source) =>
@@ -39,6 +41,7 @@ class ProductOrderedModel {
       totalPrice: map['totalPrice'] as double,
       productImage: map['productImage'] as String,
       createdDate: map['createdDate'] as String,
+      id: map['id'] as String,
     );
   }
 
@@ -55,6 +58,7 @@ class ProductOrderedModel {
       'totalPrice': totalPrice,
       'productImage': productImage,
       'createdDate': createdDate,
+      'id': id,
     };
   }
 }
@@ -71,6 +75,7 @@ extension ProductOrderedXModel on ProductOrderedModel {
       totalPrice: totalPrice,
       productImage: productImage,
       createdDate: createdDate,
+      id: id,
     );
   }
 }
