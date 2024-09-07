@@ -1,6 +1,8 @@
+import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/button/basic_app_button.dart';
 import 'package:ecommerce/core/configs/assets/app_images.dart';
 import 'package:ecommerce/core/configs/theme/app_colors.dart';
+import 'package:ecommerce/presentation/home/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class OrderPlacedPage extends StatelessWidget {
@@ -43,7 +45,8 @@ class OrderPlacedPage extends StatelessWidget {
                   BasicAppButton(
                       title: 'Finish',
                       onPressed: () {
-                        // AppNavigator.pushAndRemove(context, const HomePage());
+                        AppNavigator.pushAndRemoveUntil(
+                            context, const HomePage());
                       })
                 ],
               ),

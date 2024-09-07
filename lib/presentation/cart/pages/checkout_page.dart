@@ -1,7 +1,11 @@
 import 'package:ecommerce/common/bloc/button/button_cubit.dart';
 import 'package:ecommerce/common/helper/cart/cart_helper.dart';
+import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/button/basic_reactive_button.dart';
+import 'package:ecommerce/data/order/model/order_registration_req.dart';
 import 'package:ecommerce/domain/order/entity/product_ordered_entity.dart';
+import 'package:ecommerce/domain/order/usecases/order_registration_use_case.dart';
+import 'package:ecommerce/presentation/cart/pages/order_placed_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +29,7 @@ class CheckOutPage extends StatelessWidget {
         child: BlocListener<ButtonCubit, ButtonState>(
           listener: (context, state) {
             if (state is ButtonSuccessState) {
-              // AppNavigator.pushAndRemove(context,const OrderPlacedPage());
+              AppNavigator.pushAndRemoveUntil(context, const OrderPlacedPage());
             }
             if (state is ButtonFailureState) {
               var snackbar = SnackBar(
@@ -66,16 +70,15 @@ class CheckOutPage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // context.read < ButtonCubit > ().execute(
-                        //   usecase: OrderRegistrationUseCase(),
-                        //   params: OrderRegistrationReq(
-                        //     products: products,
-                        //     createdDate: DateTime.now().toString(),
-                        //     itemCount: products.length,
-                        //     totalPrice: CartHelper.calculateCartSubtotal(products),
-                        //     shippingAddress: _addressCon.text
-                        //   )
-                        // );
+                        context.read<ButtonCubit>().execute(
+                            usecase: OrderRegistrationUseCase(),
+                            params: OrderRegistrationReq(
+                                products: products,
+                                createdDate: DateTime.now().toString(),
+                                itemCount: products.length,
+                                totalPrice:
+                                    CartHelper.calculateCartSubtotal(products),
+                                shippingAddress: _addressCon.text));
                       })
                 ],
               );

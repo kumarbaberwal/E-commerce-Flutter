@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce/data/order/model/add_to_cart_req.dart';
+import 'package:ecommerce/data/order/model/order_registration_req.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class OrderFirebaseService {
   Future<Either> addToCart(AddToCartReq addToCartReq);
   Future<Either> getCartProducts();
+  Future<Either> orderRegistration(OrderRegistrationReq order);
   Future<Either> removeCartProduct(String id);
 }
 
@@ -44,6 +46,30 @@ class OrderFirebaseServiceImpl extends OrderFirebaseService {
         products.add(data);
       }
       return Right(products);
+    } catch (e) {
+      return const Left('Please try again!');
+    }
+  }
+
+  @override
+  Future<Either> orderRegistration(OrderRegistrationReq order) async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('Orders')
+          .add(order.toMap());
+
+      for (var item in order.products) {
+        await FirebaseFirestore.instance
+            .collection('User')
+            .doc(user.uid)
+            .collection('Cart')
+            .doc(item.id)
+            .delete();
+      }
+      return const Right('Order registered successfully');
     } catch (e) {
       return const Left('Please try again!');
     }
