@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:ecommerce/data/order/model/order_status_model.dart';
 import 'package:ecommerce/data/order/model/product_ordered_model.dart';
 import 'package:ecommerce/domain/order/entity/order_entity.dart';
