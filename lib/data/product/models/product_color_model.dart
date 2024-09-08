@@ -29,6 +29,15 @@ class ProductColorModel {
   }
 }
 
+extension ProductColorXEntity on ProductColorEntity {
+  ProductColorModel fromEntity() {
+    return ProductColorModel(
+      title: title,
+      rgb: rgb,
+    );
+  }
+}
+
 extension ProductColorXModel on ProductColorModel {
   ProductColorEntity toEntity() {
     return ProductColorEntity(

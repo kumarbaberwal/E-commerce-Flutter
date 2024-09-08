@@ -47,39 +47,42 @@ class CheckOutPage extends StatelessWidget {
                 children: [
                   _addressField(context),
                   BasicReactiveButton(
-                      content: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '\$${CartHelper.calculateCartSubtotal(products)}',
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                            const Text(
-                              'Place Order',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                            )
-                          ],
-                        ),
+                    content: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '\$${CartHelper.calculateCartSubtotal(products)}',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          const Text(
+                            'Place Order',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          )
+                        ],
                       ),
-                      onPressed: () {
-                        context.read<ButtonCubit>().execute(
+                    ),
+                    onPressed: () {
+                      context.read<ButtonCubit>().execute(
                             usecase: OrderRegistrationUseCase(),
                             params: OrderRegistrationReq(
-                                products: products,
-                                createdDate: DateTime.now().toString(),
-                                itemCount: products.length,
-                                totalPrice:
-                                    CartHelper.calculateCartSubtotal(products),
-                                shippingAddress: _addressCon.text));
-                      })
+                              products: products,
+                              createdDate: DateTime.now().toString(),
+                              itemCount: products.length,
+                              totalPrice:
+                                  CartHelper.calculateCartSubtotal(products),
+                              shippingAddress: _addressCon.text,
+                            ),
+                          );
+                    },
+                  )
                 ],
               );
             }),
@@ -91,6 +94,7 @@ class CheckOutPage extends StatelessWidget {
 
   Widget _addressField(BuildContext context) {
     return TextField(
+      keyboardType: TextInputType.text,
       controller: _addressCon,
       minLines: 2,
       maxLines: 4,

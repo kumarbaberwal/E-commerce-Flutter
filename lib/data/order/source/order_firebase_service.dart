@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class OrderFirebaseService {
   Future<Either> addToCart(AddToCartReq addToCartReq);
   Future<Either> getCartProducts();
+  Future<Either> getOrders();
   Future<Either> orderRegistration(OrderRegistrationReq order);
   Future<Either> removeCartProduct(String id);
 }
@@ -52,6 +53,21 @@ class OrderFirebaseServiceImpl extends OrderFirebaseService {
   }
 
   @override
+  Future<Either> getOrders() async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      var returnedData = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('Orders')
+          .get();
+      return Right(returnedData.docs.map((e) => e.data()).toList());
+    } catch (e) {
+      return const Left('Please Try Again!');
+    }
+  }
+
+  @override
   Future<Either> orderRegistration(OrderRegistrationReq order) async {
     try {
       var user = FirebaseAuth.instance.currentUser;
@@ -63,7 +79,7 @@ class OrderFirebaseServiceImpl extends OrderFirebaseService {
 
       for (var item in order.products) {
         await FirebaseFirestore.instance
-            .collection('User')
+            .collection('Users')
             .doc(user.uid)
             .collection('Cart')
             .doc(item.id)

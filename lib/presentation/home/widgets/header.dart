@@ -5,6 +5,7 @@ import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/domain/auth/entity/user_entity.dart';
 import 'package:ecommerce/presentation/cart/pages/cart_page.dart';
 import 'package:ecommerce/presentation/home/bloc/user_info_display_cubit.dart';
+import 'package:ecommerce/presentation/settings/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -119,7 +120,7 @@ class Header extends StatelessWidget {
   Widget _profileImage(UserEntity user, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // AppNavigator.push(context, const SettingsPage());
+        AppNavigator.push(context, const SettingsPage());
       },
       child: Container(
         height: 40,
